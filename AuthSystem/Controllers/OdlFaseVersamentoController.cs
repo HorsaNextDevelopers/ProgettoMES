@@ -26,7 +26,7 @@ namespace AuthSystem.Controllers
         }
 
         // GET: OdlFaseVersamento/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -93,7 +93,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,IdFase")] OdlFaseVersamento odlFaseVersamento)
+        public async Task<IActionResult> Edit(int id, [Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,IdFase")] OdlFaseVersamento odlFaseVersamento)
         {
             if (id != odlFaseVersamento.IdVersamento)
             {
@@ -126,7 +126,7 @@ namespace AuthSystem.Controllers
         }
 
         // GET: OdlFaseVersamento/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -155,7 +155,7 @@ namespace AuthSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OdlFaseVersamentoExists(string id)
+        private bool OdlFaseVersamentoExists(int id)
         {
             return _context.OdlFaseVersamenti.Any(e => e.IdVersamento == id);
         }

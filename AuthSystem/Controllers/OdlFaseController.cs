@@ -50,6 +50,26 @@ namespace AuthSystem.Controllers
         {
             ViewData["CodiceMacchinaFisica"] = new SelectList(_context.MacchinaFisica, "CodiceMacchinaFisica", "CodiceMacchinaFisica");
             ViewData["CodiceOdl"] = new SelectList(_context.Odls, "CodiceOdl", "CodiceOdl");
+            
+            var fase = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= FaseODLEnum.F10.ToString(), Value= ((int)FaseODLEnum.F10).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F20.ToString(), Value= ((int)FaseODLEnum.F20).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F30.ToString(), Value= ((int)FaseODLEnum.F30).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F40.ToString(), Value= ((int)FaseODLEnum.F40).ToString()}
+            };
+
+            ViewData["Fase"] = fase;
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
+
             return View();
         }
 
@@ -68,6 +88,24 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceMacchinaFisica"] = new SelectList(_context.MacchinaFisica, "CodiceMacchinaFisica", "CodiceMacchinaFisica", odlFase.CodiceMacchinaFisica);
             ViewData["CodiceOdl"] = new SelectList(_context.Odls, "CodiceOdl", "CodiceOdl", odlFase.CodiceOdl);
+            var fase = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= FaseODLEnum.F10.ToString(), Value= ((int)FaseODLEnum.F10).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F20.ToString(), Value= ((int)FaseODLEnum.F20).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F30.ToString(), Value= ((int)FaseODLEnum.F30).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F40.ToString(), Value= ((int)FaseODLEnum.F40).ToString()}
+            };
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
+
+            ViewData["Fase"] = fase;
             return View(odlFase);
         }
 
@@ -86,6 +124,25 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceMacchinaFisica"] = new SelectList(_context.MacchinaFisica, "CodiceMacchinaFisica", "CodiceMacchinaFisica", odlFase.CodiceMacchinaFisica);
             ViewData["CodiceOdl"] = new SelectList(_context.Odls, "CodiceOdl", "CodiceOdl", odlFase.CodiceOdl);
+            var fase = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= FaseODLEnum.F10.ToString(), Value= ((int)FaseODLEnum.F10).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F20.ToString(), Value= ((int)FaseODLEnum.F20).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F30.ToString(), Value= ((int)FaseODLEnum.F30).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F40.ToString(), Value= ((int)FaseODLEnum.F40).ToString()}
+            };
+            ViewData["Fase"] = fase;
+
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
+            
             return View(odlFase);
         }
 
@@ -123,6 +180,23 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceMacchinaFisica"] = new SelectList(_context.MacchinaFisica, "CodiceMacchinaFisica", "CodiceMacchinaFisica", odlFase.CodiceMacchinaFisica);
             ViewData["CodiceOdl"] = new SelectList(_context.Odls, "CodiceOdl", "CodiceOdl", odlFase.CodiceOdl);
+            var fase = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= FaseODLEnum.F10.ToString(), Value= ((int)FaseODLEnum.F10).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F20.ToString(), Value= ((int)FaseODLEnum.F20).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F30.ToString(), Value= ((int)FaseODLEnum.F30).ToString()},
+                new SelectListItem() {Text= FaseODLEnum.F40.ToString(), Value= ((int)FaseODLEnum.F40).ToString()}
+            };
+            ViewData["Fase"] = fase;
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
             return View(odlFase);
         }
 

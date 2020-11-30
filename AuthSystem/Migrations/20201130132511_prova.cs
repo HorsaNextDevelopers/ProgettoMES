@@ -321,10 +321,11 @@ namespace AuthSystem.Migrations
                 name: "OdlFaseVersamenti",
                 columns: table => new
                 {
-                    IdVersamento = table.Column<string>(nullable: false),
+                    IdVersamento = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Data = table.Column<DateTime>(nullable: false),
-                    PezziBuoni = table.Column<string>(nullable: true),
-                    PezziDifettosi = table.Column<string>(nullable: true),
+                    PezziBuoni = table.Column<int>(nullable: false),
+                    PezziDifettosi = table.Column<int>(nullable: false),
                     TempoEffetivo = table.Column<float>(nullable: false),
                     IdFase = table.Column<int>(nullable: false)
                 },
@@ -344,14 +345,14 @@ namespace AuthSystem.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "211a2baa-b291-4a7b-adbe-564e346879d5", "User", "User" },
-                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "c6d6611b-97ff-4c81-904c-2afae3f08eb1", "Admin", "ADMIN" }
+                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "33036ed0-ac06-4742-801f-a8689e275bf6", "User", "User" },
+                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "b4379d2f-a24b-48b7-97b7-ec25a12fc66c", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "b8c6e6e1-0df7-4677-9345-66dc8a6058be", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFSiWNfnlVtWg2EoJg/lecov6eivX86IP8WAf4r0RtGj/ll55uJQwnQzfpQMZXWulA==", null, false, "", false, "admin@admin.com" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "d50b14da-a26b-48a2-bae2-b99ec93ea3b1", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEPvDVg6d3SD5xetyxKCpJNSs/VvCZRxLoWTm1Gr9+bhlNhwsTIt0rHM7rE4P4JirYA==", null, false, "", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Postazioni",

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(NContext))]
-    [Migration("20201130103237_prova")]
+    [Migration("20201130132511_prova")]
     partial class prova
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,13 +96,13 @@ namespace AuthSystem.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8c6e6e1-0df7-4677-9345-66dc8a6058be",
+                            ConcurrencyStamp = "d50b14da-a26b-48a2-bae2-b99ec93ea3b1",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFSiWNfnlVtWg2EoJg/lecov6eivX86IP8WAf4r0RtGj/ll55uJQwnQzfpQMZXWulA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPvDVg6d3SD5xetyxKCpJNSs/VvCZRxLoWTm1Gr9+bhlNhwsTIt0rHM7rE4P4JirYA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -242,8 +242,10 @@ namespace AuthSystem.Migrations
 
             modelBuilder.Entity("AuthSystem.Models.OdlFaseVersamento", b =>
                 {
-                    b.Property<string>("IdVersamento")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("IdVersamento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
@@ -251,11 +253,11 @@ namespace AuthSystem.Migrations
                     b.Property<int>("IdFase")
                         .HasColumnType("int");
 
-                    b.Property<string>("PezziBuoni")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PezziBuoni")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PezziDifettosi")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PezziDifettosi")
+                        .HasColumnType("int");
 
                     b.Property<float>("TempoEffetivo")
                         .HasColumnType("real");
@@ -501,14 +503,14 @@ namespace AuthSystem.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "c6d6611b-97ff-4c81-904c-2afae3f08eb1",
+                            ConcurrencyStamp = "b4379d2f-a24b-48b7-97b7-ec25a12fc66c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1",
-                            ConcurrencyStamp = "211a2baa-b291-4a7b-adbe-564e346879d5",
+                            ConcurrencyStamp = "33036ed0-ac06-4742-801f-a8689e275bf6",
                             Name = "User",
                             NormalizedName = "User"
                         });
