@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthSystem.Migrations
 {
-    public partial class prova : Migration
+    public partial class MM : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -335,14 +335,21 @@ namespace AuthSystem.Migrations
                     PezziBuoni = table.Column<int>(nullable: false),
                     PezziDifettosi = table.Column<int>(nullable: false),
                     TempoEffetivo = table.Column<float>(nullable: false),
-                    IdFase = table.Column<int>(nullable: false)
+                    Fase = table.Column<int>(nullable: false),
+                    CodiceODl = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OdlFaseVersamenti", x => x.IdVersamento);
                     table.ForeignKey(
-                        name: "FK_OdlFaseVersamenti_OdlFasi_IdFase",
-                        column: x => x.IdFase,
+                        name: "FK_OdlFaseVersamenti_OdlFasi_CodiceODl",
+                        column: x => x.CodiceODl,
+                        principalTable: "OdlFasi",
+                        principalColumn: "IdFaseOdl",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OdlFaseVersamenti_OdlFasi_Fase",
+                        column: x => x.Fase,
                         principalTable: "OdlFasi",
                         principalColumn: "IdFaseOdl",
                         onDelete: ReferentialAction.Cascade);
@@ -353,14 +360,14 @@ namespace AuthSystem.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "39889f7b-9fd0-4f4a-bc10-d25b47d1562f", "User", "User" },
-                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "e20476cc-c280-4863-abaa-91c5a53906b7", "Admin", "ADMIN" }
+                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "6b1d6c8c-2856-45d1-a995-009f1573c968", "User", "User" },
+                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "36e31149-e73a-4fac-89e4-671d61869f05", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "a38d342d-a17a-45ae-a5e6-0db9eaaf77ab", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEP6BfVBe8bfniXGbcd9q3y+1NJzgpOC8Fp81+qNqtwAX4tdzMxQqJDqYME0BJ7AMyg==", null, false, "", false, "admin@admin.com" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "7d1b77db-877d-4251-906f-3aa581f46c09", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEHGmEXnrtvQ7CrHqLuH8OgFMCLoPkmEGLVpTsJZ45wy1VKHwkgsNx5gTEYw/4zWbnw==", null, false, "", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Postazioni",
@@ -455,9 +462,14 @@ namespace AuthSystem.Migrations
                 column: "CodiceCentroDiLavoro");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdlFaseVersamenti_IdFase",
+                name: "IX_OdlFaseVersamenti_CodiceODl",
                 table: "OdlFaseVersamenti",
-                column: "IdFase");
+                column: "CodiceODl");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OdlFaseVersamenti_Fase",
+                table: "OdlFaseVersamenti",
+                column: "Fase");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OdlFasi_CodiceMacchinaFisica",

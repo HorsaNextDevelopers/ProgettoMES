@@ -94,13 +94,13 @@ namespace AuthSystem.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a38d342d-a17a-45ae-a5e6-0db9eaaf77ab",
+                            ConcurrencyStamp = "7d1b77db-877d-4251-906f-3aa581f46c09",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP6BfVBe8bfniXGbcd9q3y+1NJzgpOC8Fp81+qNqtwAX4tdzMxQqJDqYME0BJ7AMyg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHGmEXnrtvQ7CrHqLuH8OgFMCLoPkmEGLVpTsJZ45wy1VKHwkgsNx5gTEYw/4zWbnw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -252,10 +252,13 @@ namespace AuthSystem.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CodiceODl")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdFase")
+                    b.Property<int>("Fase")
                         .HasColumnType("int");
 
                     b.Property<int>("PezziBuoni")
@@ -269,7 +272,9 @@ namespace AuthSystem.Migrations
 
                     b.HasKey("IdVersamento");
 
-                    b.HasIndex("IdFase");
+                    b.HasIndex("CodiceODl");
+
+                    b.HasIndex("Fase");
 
                     b.ToTable("OdlFaseVersamenti");
                 });
@@ -508,14 +513,14 @@ namespace AuthSystem.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "e20476cc-c280-4863-abaa-91c5a53906b7",
+                            ConcurrencyStamp = "36e31149-e73a-4fac-89e4-671d61869f05",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1",
-                            ConcurrencyStamp = "39889f7b-9fd0-4f4a-bc10-d25b47d1562f",
+                            ConcurrencyStamp = "6b1d6c8c-2856-45d1-a995-009f1573c968",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -680,9 +685,15 @@ namespace AuthSystem.Migrations
 
             modelBuilder.Entity("AuthSystem.Models.OdlFaseVersamento", b =>
                 {
+                    b.HasOne("AuthSystem.Models.OdlFase", "ODl")
+                        .WithMany()
+                        .HasForeignKey("CodiceODl")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AuthSystem.Models.OdlFase", "Fasi")
                         .WithMany()
-                        .HasForeignKey("IdFase")
+                        .HasForeignKey("Fase")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

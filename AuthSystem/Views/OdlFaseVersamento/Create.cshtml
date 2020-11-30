@@ -12,11 +12,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-            <label asp-for="IdVersamento" class="control-label"></label>
-            <input asp-for="IdVersamento" class="form-control" />
-            <span asp-validation-for="IdVersamento" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" />
@@ -38,12 +33,12 @@
                 <span asp-validation-for="TempoEffetivo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Fase</label>
-                <select asp-for="IdFase" class="form-control" asp-items="ViewBag.IdFase"></select>
+                <label asp-for="Fase" class="control-label"></label>
+                <select asp-for="Fase" class ="form-control" asp-items="ViewBag.Fase"></select>
             </div>
             <div class="form-group">
-                <label  class="control-label">CodiceOdl</label>
-                <select asp-for="IdFase" class="form-control" asp-items="ViewBag.ODL"></select>
+                <label asp-for="CodiceODl" class="control-label"></label>
+                <select asp-for="CodiceODl" class ="form-control" asp-items="ViewBag.CodiceODl"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -25,10 +25,10 @@
                 @Html.DisplayNameFor(model => model.TempoEffetivo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fasi.Fase)
+                @Html.DisplayNameFor(model => model.Fasi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fasi.CodiceOdl)
+                @Html.DisplayNameFor(model => model.ODl)
             </th>
             <th></th>
         </tr>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Fasi.Fase)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Fasi.CodiceOdl)
+                @Html.DisplayFor(modelItem => item.ODl.CodiceOdl)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdVersamento">Edit</a> |
