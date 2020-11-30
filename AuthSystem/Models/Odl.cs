@@ -11,7 +11,7 @@ namespace AuthSystem.Models
     {
         [Key]
         [Column(TypeName = "nvarchar(128)")]
-        public string CodiceOdl { get; set; }
+        public string IdOdl { get; set; }
         public int QuantitaDaProdurre { get; set; }
         
         [DataType(DataType.Date)]
@@ -23,12 +23,12 @@ namespace AuthSystem.Models
         [DisplayFormat(DataFormatString = "{0:dd\\-MM\\-yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Immettere la data aggiornata")]
         public DateTime DataFine { get; set; }
-
-        public OdlStateEnum Stato { get; set; }
-
         public string CodiceArticolo { get; set; }
         [ForeignKey("CodiceArticolo ")]
         public Articolo Articoli { get; set; }
+        public string CodiceCentroDiLavoro { get; set; }
+        [ForeignKey("CodiceCentroDiLavoro ")]
+        public CentroDiLavoro CentriDiLavoro { get; set; }
     }
    
 }
