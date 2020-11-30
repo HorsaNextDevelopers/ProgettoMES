@@ -11,7 +11,7 @@ namespace AuthSystem.Models
     public class OdlFaseVersamento
     {
         [Key]
-        public string IdVersamento { get; set; }
+        public int IdVersamento { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd\\-MM\\-yyyy}", ApplyFormatInEditMode = true)]
