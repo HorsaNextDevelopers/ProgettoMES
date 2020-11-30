@@ -16,7 +16,9 @@ namespace AuthSystem.Models
         public Articolo Articoli { get; set; }
 
        // public int CodiceFiglio { get; set; }
+
         [ForeignKey("IdDistintaBase")]
+        [DisplayName("CodiceFiglio")]
         public DistintaBase DistintaBasi { get; set; }
         public int Quantità { get; set; }
     }

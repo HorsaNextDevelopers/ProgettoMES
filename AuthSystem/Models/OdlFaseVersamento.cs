@@ -18,14 +18,17 @@ namespace AuthSystem.Models
         [Required(ErrorMessage = "Immettere la data aggiornata")]
         [DisplayName("Data")]
         public DateTime Data { get; set; }
+       
         public string PezziBuoni { get; set; }
+
         public string PezziDifettosi { get; set; }
 
         public float TempoEffetivo { get; set; }
 
-        public string IdFase { get; set; }
+        public int IdFase { get; set; }
         [ForeignKey("IdFase")]
         public OdlFase Fasi { get; set; }
+     
 
     }
 }

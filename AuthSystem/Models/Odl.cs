@@ -9,9 +9,8 @@ namespace AuthSystem.Models
 {
     public class Odl
     {
-        [Key]
-        [Column(TypeName = "nvarchar(128)")]
-        public string IdOdl { get; set; }
+        [Key]  
+        public int CodiceOdl { get; set; }
         public int QuantitaDaProdurre { get; set; }
         
         [DataType(DataType.Date)]

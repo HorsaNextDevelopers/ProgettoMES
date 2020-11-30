@@ -12,8 +12,8 @@ namespace AuthSystem.Models
         [Key]
         public int IdFaseOdl { get; set; }
 
-        [Column(TypeName = "nvarchar(128)")]
-        public string CodiceOdl { get; set; }
+        
+        public int CodiceOdl { get; set; }
         [ForeignKey("CodiceOdl")]
         public Odl Odls { get; set; }
 
@@ -27,6 +27,8 @@ namespace AuthSystem.Models
         public MacchinaFisica MacchineFisiche { get; set; }
 
         public float TempoStandard { get; set; }
+
+        public OdlStateEnum Stato { get; set; }
 
     }
    
