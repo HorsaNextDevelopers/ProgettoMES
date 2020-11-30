@@ -91,8 +91,10 @@ namespace AuthSystem.Migrations
                 name: "DistintaBasi",
                 columns: table => new
                 {
-                    IdDistintaBase = table.Column<int>(nullable: false),
+                    IdDistintaBase = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CodiceArticolo = table.Column<string>(nullable: true),
+                    CodiceFiglio = table.Column<string>(nullable: true),
                     Quantità = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -101,6 +103,12 @@ namespace AuthSystem.Migrations
                     table.ForeignKey(
                         name: "FK_DistintaBasi_Articoli_CodiceArticolo",
                         column: x => x.CodiceArticolo,
+                        principalTable: "Articoli",
+                        principalColumn: "CodiceArticolo",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DistintaBasi_Articoli_CodiceFiglio",
+                        column: x => x.CodiceFiglio,
                         principalTable: "Articoli",
                         principalColumn: "CodiceArticolo",
                         onDelete: ReferentialAction.Restrict);
@@ -345,14 +353,14 @@ namespace AuthSystem.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "33036ed0-ac06-4742-801f-a8689e275bf6", "User", "User" },
-                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "b4379d2f-a24b-48b7-97b7-ec25a12fc66c", "Admin", "ADMIN" }
+                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "39889f7b-9fd0-4f4a-bc10-d25b47d1562f", "User", "User" },
+                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "e20476cc-c280-4863-abaa-91c5a53906b7", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "d50b14da-a26b-48a2-bae2-b99ec93ea3b1", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEPvDVg6d3SD5xetyxKCpJNSs/VvCZRxLoWTm1Gr9+bhlNhwsTIt0rHM7rE4P4JirYA==", null, false, "", false, "admin@admin.com" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "a38d342d-a17a-45ae-a5e6-0db9eaaf77ab", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEP6BfVBe8bfniXGbcd9q3y+1NJzgpOC8Fp81+qNqtwAX4tdzMxQqJDqYME0BJ7AMyg==", null, false, "", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Postazioni",
@@ -435,6 +443,11 @@ namespace AuthSystem.Migrations
                 name: "IX_DistintaBasi_CodiceArticolo",
                 table: "DistintaBasi",
                 column: "CodiceArticolo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DistintaBasi_CodiceFiglio",
+                table: "DistintaBasi",
+                column: "CodiceFiglio");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MacchinaFisica_CodiceCentroDiLavoro",

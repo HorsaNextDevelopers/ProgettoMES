@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(NContext))]
-    [Migration("20201130132511_prova")]
+    [Migration("20201130134922_prova")]
     partial class prova
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,13 +96,13 @@ namespace AuthSystem.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d50b14da-a26b-48a2-bae2-b99ec93ea3b1",
+                            ConcurrencyStamp = "a38d342d-a17a-45ae-a5e6-0db9eaaf77ab",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPvDVg6d3SD5xetyxKCpJNSs/VvCZRxLoWTm1Gr9+bhlNhwsTIt0rHM7rE4P4JirYA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP6BfVBe8bfniXGbcd9q3y+1NJzgpOC8Fp81+qNqtwAX4tdzMxQqJDqYME0BJ7AMyg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -142,9 +142,14 @@ namespace AuthSystem.Migrations
             modelBuilder.Entity("AuthSystem.Models.DistintaBase", b =>
                 {
                     b.Property<int>("IdDistintaBase")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CodiceArticolo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CodiceFiglio")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Quantità")
@@ -153,6 +158,8 @@ namespace AuthSystem.Migrations
                     b.HasKey("IdDistintaBase");
 
                     b.HasIndex("CodiceArticolo");
+
+                    b.HasIndex("CodiceFiglio");
 
                     b.ToTable("DistintaBasi");
                 });
@@ -503,14 +510,14 @@ namespace AuthSystem.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "b4379d2f-a24b-48b7-97b7-ec25a12fc66c",
+                            ConcurrencyStamp = "e20476cc-c280-4863-abaa-91c5a53906b7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1",
-                            ConcurrencyStamp = "33036ed0-ac06-4742-801f-a8689e275bf6",
+                            ConcurrencyStamp = "39889f7b-9fd0-4f4a-bc10-d25b47d1562f",
                             Name = "User",
                             NormalizedName = "User"
                         });
@@ -633,15 +640,13 @@ namespace AuthSystem.Migrations
 
             modelBuilder.Entity("AuthSystem.Models.DistintaBase", b =>
                 {
-                    b.HasOne("AuthSystem.Models.Articolo", "Articoli")
+                    b.HasOne("AuthSystem.Models.Articolo", "ArticoloPadre")
                         .WithMany()
                         .HasForeignKey("CodiceArticolo");
 
-                    b.HasOne("AuthSystem.Models.DistintaBase", "DistintaBasi")
+                    b.HasOne("AuthSystem.Models.Articolo", "ArticoloFiglio")
                         .WithMany()
-                        .HasForeignKey("IdDistintaBase")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CodiceFiglio");
                 });
 
             modelBuilder.Entity("AuthSystem.Models.MacchinaFisica", b =>
