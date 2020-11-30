@@ -1,0 +1,51 @@
+﻿@model Identity.Models.RoleEdit
+
+@{ ViewData["Title"] = "Aggiorna ruoli";
+   Layout = "~/Views/Shared/_Layout.cshtml"; 
+    }
+
+<h1>Aggiorna  ruoli</h1>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+    <h2>Aggiungi a @Model.Role.Name</h2>
+    <table class="table table-bordered table-sm">
+        @if (Model.NonMembers.Count() == 0)
+        {
+<tr><td colspan="2">&nbsp</td></tr> }
+            else
+            {
+@foreach (AuthSystem.Areas.Identity.Data.ApplicationUser user in Model.NonMembers)
+{
+<tr>
+    <td>@user.Email</td>
+    <td>
+        <input type="checkbox" name="AddIds" value="@user.Id">
+    </td>
+</tr>}}
+    </table>
+
+    <h2>Elimina da @Model.Role.Name</h2>
+    <table class="table table-bordered table-sm">
+        @if (Model.Members.Count() == 0)
+        {
+<tr><td colspan="2">&nbsp</td></tr> }
+            else
+            {
+@foreach (AuthSystem.Areas.Identity.Data.ApplicationUser user in Model.Members)
+{
+<tr>
+    <td>@user.Email</td>
+    <td>
+        <input type="checkbox" name="DeleteIds" value="@user.Id">
+    </td>
+</tr>}}
+    </table>
+    <button type="submit" class="btn btn-primary">Salva</button>
+    <br />
+    <p><a asp-action="Index">Torna alla lista</a></p>
+</form>

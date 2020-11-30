@@ -1,0 +1,33 @@
+﻿@model AuthSystem.Models.Postazione
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Elimina</h1>
+
+<h3>Sei sicuro di voler eliminare questa prenotazione?</h3>
+<div>
+    <h4>Postazione</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomePostazione)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomePostazione)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdPostazione" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Torna alla lista</a>
+    </form>
+</div>

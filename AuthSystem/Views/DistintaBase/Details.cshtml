@@ -1,0 +1,36 @@
+﻿@model AuthSystem.Models.DistintaBase
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DistintaBase</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Articoli)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Articoli.CodiceArticolo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DistintaBasi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DistintaBasi.IdDistintaBase)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantità)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantità)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdDistintaBase">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

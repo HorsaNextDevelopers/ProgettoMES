@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AuthSystem.Models.CentroDiLavoro>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Centro di lavoro</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodiceCentroDiLavoro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrzione)
+            </th>
+            <th><a asp-action="Create" class="btn btn-outline-success "><i class="far fa-plus-square"></i>Centro di lavoro</a></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodiceCentroDiLavoro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrzione)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodiceCentroDiLavoro"><i class="fa fa-marker fa-lg"></i></a> |
+
+                <a asp-action="Delete" asp-route-id="@item.CodiceCentroDiLavoro" class="text-danger ml-1"><i class="fa fa-trash-alt fa-lg"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,39 @@
+﻿@model AuthSystem.Models.MacchinaFisica
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Modifica</h1>
+
+<h4>Macchina fisica</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CodiceMacchinaFisica" />
+            <div class="form-group">
+                <label asp-for="Descrizione" class="control-label"></label>
+                <input asp-for="Descrizione" class="form-control" />
+                <span asp-validation-for="Descrizione" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodiceCentroDiLavoro" class="control-label"></label>
+                <select asp-for="CodiceCentroDiLavoro" class="form-control" asp-items="ViewBag.CodiceCentroDiLavoro"></select>
+                <span asp-validation-for="CodiceCentroDiLavoro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Torna alla lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,32 @@
+﻿@model AuthSystem.Models.MacchinaFisica
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1>Elimina</h1>
+
+<h3>Sei sicuro di voler eliminare questa macchina fisica?</h3>
+<div>
+    <h4>MacchinaFisica</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CentriDiLavoro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CentriDiLavoro.CodiceCentroDiLavoro)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CodiceMacchinaFisica" />
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="Index">Torna alla lista</a>
+    </form>
+</div>

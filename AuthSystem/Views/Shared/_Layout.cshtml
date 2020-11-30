@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Horsa Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-superhero.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Prodotto</a>
+                <div class="dropdown-menu" style="">
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="Articolo" asp-action="Index">Articoli</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="DistintaBase" asp-action="Index">Distinta</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="CentroDiLavoro" asp-action="Index">CentriDiLavoro</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="MacchinaFisica" asp-action="Index">MacchineFisica</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="GerarchiaDistintaComponente" asp-action="Index">GerarchiaDestinta</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="Odl" asp-action="Index">Ordine di lavoro</a>
+                    <a class="nav-link dropdown-item text-white" asp-area="" asp-controller="OdlFase" asp-action="Index">OdlFase</a>
+                </div>
+            </li>
+            <li>
+                <a class="nav-link text-white" asp-area="" asp-controller="OdlFaseVersamento" asp-action="Index">OdlFaseVersamenti</a>
+            </li>
+            <li>
+                <a class="nav-link text-white" asp-area="" asp-controller="Grafici" asp-action="Index">Grafico dei Pezzi</a>
+            </li>
+
+            @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Grafici</a>
+            <div class="dropdown-menu" style="">
+                <a class="nav-link text-white" asp-area="" asp-controller="Grafici" asp-action="Index">Pezzi</a>
+                <a class="nav-link text-white" asp-area="" asp-controller="GraficiComponenti" asp-action="Index">Tempi</a>
+            </div>
+        </li>*@
+            <li>
+                <a class="nav-link text-white" asp-area="" asp-controller="Prenotazione" asp-action="Create">Prenota</a>
+            </li>
+
+
+            @*<li>
+            <a class="nav-link text-white" asp-area="" asp-controller="Postazione" asp-action="Index">Postazioni</a>
+        </li>*@
+
+
+
+            @if (this.User.IsInRole("Admin"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Area admin</a>
+                    <div class="dropdown-menu" style="">
+
+                        <a class="nav-link text-white" asp-area="" asp-controller="Utenti" asp-action="Index">Lista utenti</a>
+
+                        <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">Registra utente</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Postazione" asp-action="Index">Postazioni</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="Index">Gestisci ruoli</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Prenotazione" asp-action="Index">Prenotazioni</a>
+                    </div>
+                </li>
+            }
+
+
+
+        </ul>
+    </div>}
+
+
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial.cshtml" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+
+        <div class="container">
+            &copy; 2020 - Horsa Next S.r.l.- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        
+    </footer>
+    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

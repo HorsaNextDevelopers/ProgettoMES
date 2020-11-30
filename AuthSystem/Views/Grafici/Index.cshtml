@@ -1,0 +1,50 @@
+﻿@model AuthSystem.ViewModel.GraficoViewModel
+
+@{
+    ViewData["Title"] = "Grafici";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Grafici</h1>
+
+<canvas id="myChart" width="200" height="100"></canvas>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: @Html.Raw(Json.Serialize(@Model.Labels)),
+        datasets: @Html.Raw(Json.Serialize(Model.DataSet)),
+    },
+    options: {
+        title: {
+            display: false,
+            text: 'Chart.js Bar Chart - Stacked'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false
+        },
+        responsive: true,
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    }
+});
+
+    function color (context) {
+        var index = context.dataIndex;
+        var value = context.dataset.data[index];
+        return index % 2 ? 'red' :    // else, alternate values in red and green
+                'green';
+    }
+</script>

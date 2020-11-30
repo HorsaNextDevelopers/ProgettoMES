@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AuthSystem.Models.MacchinaFisica>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Macchina fisica</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodiceMacchinaFisica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CentriDiLavoro)
+            </th>
+            <th><a asp-action="Create" class="btn btn-outline-success "><i class="far fa-plus-square"></i>Macchina fisica</a></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodiceMacchinaFisica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CentriDiLavoro.CodiceCentroDiLavoro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodiceMacchinaFisica "><i class="fa fa-marker fa-lg"></i></a> |
+
+                <a asp-action="Delete" asp-route-id="@item.CodiceMacchinaFisica " class="text-danger ml-1"><i class="fa fa-trash-alt fa-lg"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
