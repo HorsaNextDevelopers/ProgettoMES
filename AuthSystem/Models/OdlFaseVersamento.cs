@@ -19,9 +19,9 @@ namespace AuthSystem.Models
         [DisplayName("Data")]
         public DateTime Data { get; set; }
        
-        public string PezziBuoni { get; set; }
+        public int PezziBuoni { get; set; }
 
-        public string PezziDifettosi { get; set; }
+        public int PezziDifettosi { get; set; }
 
         public float TempoEffetivo { get; set; }
 
