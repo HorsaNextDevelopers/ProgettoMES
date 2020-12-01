@@ -10,41 +10,41 @@
     <h4>OdlFaseVersamento</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Data)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Data)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PezziBuoni)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PezziBuoni)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PezziDifettosi)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PezziDifettosi)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TempoEffetivo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TempoEffetivo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fasi)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fasi.Fase)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fasi.IdFaseOdl)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fasi.Fase)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ODl)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fasi.CodiceOdl)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ODl.IdFaseOdl)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fasi.CodiceOdl)
         </dd>
     </dl>
 </div>

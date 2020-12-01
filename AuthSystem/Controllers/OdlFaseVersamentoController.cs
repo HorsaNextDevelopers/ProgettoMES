@@ -21,7 +21,7 @@ namespace AuthSystem.Controllers
         // GET: OdlFaseVersamento
         public async Task<IActionResult> Index()
         {
-            var nContext = _context.OdlFaseVersamenti.Include(o => o.Fasi).Include(o => o.ODl);
+            var nContext = _context.OdlFaseVersamenti.Include(o => o.Fasi);
             return View(await nContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace AuthSystem.Controllers
 
             var odlFaseVersamento = await _context.OdlFaseVersamenti
                 .Include(o => o.Fasi)
-                .Include(o => o.ODl)
                 .FirstOrDefaultAsync(m => m.IdVersamento == id);
             if (odlFaseVersamento == null)
             {
@@ -48,8 +47,8 @@ namespace AuthSystem.Controllers
         // GET: OdlFaseVersamento/Create
         public IActionResult Create()
         {
-            ViewData["Fase"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "Fase");
-            ViewData["CodiceODl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceODL");
+            ViewData["IdFaseOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "Fase"); 
+            ViewData["CodiceOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceOdl");
             return View();
         }
 
@@ -58,7 +57,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,Fase,CodiceODl")] OdlFaseVersamento odlFaseVersamento)
+        public async Task<IActionResult> Create([Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,IdFaseOdl")] OdlFaseVersamento odlFaseVersamento)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +65,8 @@ namespace AuthSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Fase"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "Fase", odlFaseVersamento.Fase);
-            ViewData["CodiceODl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceODL", odlFaseVersamento.CodiceODl);
+            ViewData["IdFaseOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "IdFaseOdl", odlFaseVersamento.IdFaseOdl);
+            ViewData["CodiceOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceOdl", odlFaseVersamento.IdFaseOdl);
             return View(odlFaseVersamento);
         }
 
@@ -84,8 +83,8 @@ namespace AuthSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["Fase"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "Fase", odlFaseVersamento.Fase);
-            ViewData["CodiceODl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceODL", odlFaseVersamento.CodiceODl);
+            ViewData["IdFaseOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "IdFaseOdl", odlFaseVersamento.IdFaseOdl);
+            ViewData["CodiceOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceOdl", odlFaseVersamento.IdFaseOdl);
             return View(odlFaseVersamento);
         }
 
@@ -94,7 +93,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,Fase,CodiceODl")] OdlFaseVersamento odlFaseVersamento)
+        public async Task<IActionResult> Edit(int id, [Bind("IdVersamento,Data,PezziBuoni,PezziDifettosi,TempoEffetivo,IdFaseOdl")] OdlFaseVersamento odlFaseVersamento)
         {
             if (id != odlFaseVersamento.IdVersamento)
             {
@@ -121,8 +120,8 @@ namespace AuthSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Fase"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "Fase", odlFaseVersamento.Fase);
-            ViewData["CodiceODl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceODL", odlFaseVersamento.CodiceODl);
+            ViewData["IdFaseOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "IdFaseOdl", odlFaseVersamento.IdFaseOdl);
+            ViewData["CodiceOdl"] = new SelectList(_context.OdlFasi, "IdFaseOdl", "CodiceOdl", odlFaseVersamento.IdFaseOdl);
             return View(odlFaseVersamento);
         }
 
@@ -136,7 +135,6 @@ namespace AuthSystem.Controllers
 
             var odlFaseVersamento = await _context.OdlFaseVersamenti
                 .Include(o => o.Fasi)
-                .Include(o => o.ODl)
                 .FirstOrDefaultAsync(m => m.IdVersamento == id);
             if (odlFaseVersamento == null)
             {

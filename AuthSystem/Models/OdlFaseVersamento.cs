@@ -25,13 +25,12 @@ namespace AuthSystem.Models
 
         public float TempoEffetivo { get; set; }
 
-        public int Fase { get; set; }
-        [ForeignKey("Fase")]
+        
+        public int IdFaseOdl { get; set; }
+        [ForeignKey("IdFaseOdl")]
         public OdlFase Fasi { get; set; }
 
-        public int CodiceODl { get; set; }
-        [ForeignKey("CodiceODl")]
-        public OdlFase ODl { get; set; }
+       
 
 
 
