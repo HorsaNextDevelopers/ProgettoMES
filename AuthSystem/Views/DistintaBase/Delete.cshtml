@@ -12,16 +12,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Articoli)
+            @Html.DisplayNameFor(model => model.ArticoloPadre)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Articoli.CodiceArticolo)
+            @Html.DisplayFor(model => model.ArticoloPadre.CodiceArticolo)
         </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DistintaBasi)
+            @Html.DisplayNameFor(model => model.ArticoloFiglio)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DistintaBasi.IdDistintaBase)
+            @Html.DisplayFor(model => model.ArticoloFiglio.CodiceArticolo)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Quantità)

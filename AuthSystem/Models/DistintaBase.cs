@@ -9,15 +9,14 @@ namespace AuthSystem.Models
         [Key]
         public int IdDistintaBase { get; set; }
 
-
+        [DisplayName("CodicePadre")]
         public string CodiceArticolo { get; set; }
         [ForeignKey("CodiceArticolo")]
-        [DisplayName("CodicePadre")]
-        public Articolo Articoli { get; set; }
+        public Articolo ArticoloPadre { get; set; }
 
-       // public int CodiceFiglio { get; set; }
-        [ForeignKey("IdDistintaBase")]
-        public DistintaBase DistintaBasi { get; set; }
+        public string CodiceFiglio { get; set; }
+        [ForeignKey("CodiceFiglio")]
+        public Articolo ArticoloFiglio { get; set; }
         public int Quantità { get; set; }
     }
 }

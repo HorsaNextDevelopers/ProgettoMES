@@ -21,7 +21,7 @@ namespace AuthSystem.Controllers
         // GET: DistintaBase
         public async Task<IActionResult> Index()
         {
-            var nContext = _context.DistintaBasi.Include(d => d.Articoli).Include(d => d.DistintaBasi);
+            var nContext = _context.DistintaBasi.Include(d => d.ArticoloFiglio).Include(d => d.ArticoloPadre);
             return View(await nContext.ToListAsync());
         }
 
@@ -34,8 +34,8 @@ namespace AuthSystem.Controllers
             }
 
             var distintaBase = await _context.DistintaBasi
-                .Include(d => d.Articoli)
-                .Include(d => d.DistintaBasi)
+                .Include(d => d.ArticoloFiglio)
+                .Include(d => d.ArticoloPadre)
                 .FirstOrDefaultAsync(m => m.IdDistintaBase == id);
             if (distintaBase == null)
             {
@@ -48,8 +48,8 @@ namespace AuthSystem.Controllers
         // GET: DistintaBase/Create
         public IActionResult Create()
         {
+            ViewData["CodiceFiglio"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo");
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo");
-            ViewData["IdDistintaBase"] = new SelectList(_context.DistintaBasi, "IdDistintaBase", "CodiceArticolo");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdDistintaBase,CodiceArticolo,Quantità")] DistintaBase distintaBase)
+        public async Task<IActionResult> Create([Bind("IdDistintaBase,CodiceArticolo,CodiceFiglio,Quantità")] DistintaBase distintaBase)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace AuthSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CodiceFiglio"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceFiglio);
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceArticolo);
-            ViewData["IdDistintaBase"] = new SelectList(_context.DistintaBasi, "IdDistintaBase", "CodiceArticolov", distintaBase.IdDistintaBase);
             return View(distintaBase);
         }
 
@@ -84,8 +84,8 @@ namespace AuthSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["CodiceFiglio"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceFiglio);
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceArticolo);
-            ViewData["IdDistintaBase"] = new SelectList(_context.DistintaBasi, "IdDistintaBase", "CodiceArticolo", distintaBase.IdDistintaBase);
             return View(distintaBase);
         }
 
@@ -94,7 +94,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdDistintaBase,CodiceArticolo,Quantità")] DistintaBase distintaBase)
+        public async Task<IActionResult> Edit(int id, [Bind("IdDistintaBase,CodiceArticolo,CodiceFiglio,Quantità")] DistintaBase distintaBase)
         {
             if (id != distintaBase.IdDistintaBase)
             {
@@ -121,8 +121,8 @@ namespace AuthSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CodiceFiglio"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceFiglio);
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", distintaBase.CodiceArticolo);
-            ViewData["IdDistintaBase"] = new SelectList(_context.DistintaBasi, "IdDistintaBase", "CodiceArticolo", distintaBase.IdDistintaBase);
             return View(distintaBase);
         }
 
@@ -135,8 +135,8 @@ namespace AuthSystem.Controllers
             }
 
             var distintaBase = await _context.DistintaBasi
-                .Include(d => d.Articoli)
-                .Include(d => d.DistintaBasi)
+                .Include(d => d.ArticoloFiglio)
+                .Include(d => d.ArticoloPadre)
                 .FirstOrDefaultAsync(m => m.IdDistintaBase == id);
             if (distintaBase == null)
             {

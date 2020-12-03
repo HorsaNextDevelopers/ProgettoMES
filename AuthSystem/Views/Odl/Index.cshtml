@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AuthSystem.Models.Odl>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantitaDaProdurre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInizio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articoli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CentriDiLavoro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantitaDaProdurre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInizio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Articoli.CodiceArticolo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CentriDiLavoro.CodiceCentroDiLavoro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodiceOdl">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CodiceOdl">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CodiceOdl">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

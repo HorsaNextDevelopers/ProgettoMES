@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AuthSystem.Models.OdlFase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Odls)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MacchineFisiche)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TempoStandard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stato)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Odls.CodiceOdl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MacchineFisiche.CodiceMacchinaFisica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TempoStandard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stato)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdFaseOdl">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdFaseOdl">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdFaseOdl">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

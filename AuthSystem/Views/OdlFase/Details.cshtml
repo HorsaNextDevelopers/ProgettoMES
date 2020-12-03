@@ -1,0 +1,54 @@
+﻿@model AuthSystem.Models.OdlFase
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>OdlFase</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Odls)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Odls.CodiceOdl)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fase)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fase)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MacchineFisiche)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MacchineFisiche.CodiceMacchinaFisica)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TempoStandard)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TempoStandard)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stato)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stato)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdFaseOdl">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
