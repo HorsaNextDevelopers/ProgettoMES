@@ -1,4 +1,5 @@
-﻿using AuthSystem.Areas.Identity.Data;
+﻿using AuthSystem.ApiModel;
+using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ namespace AuthSystem.Controllers.Api
             return this.Ok(versamento);
         }
 
-        
+
 
         //POST api/<OdlFaseVersamentoApiController>
         //[HttpPost]
@@ -65,6 +66,75 @@ namespace AuthSystem.Controllers.Api
 
         //    return this.Ok(utente);
         //}
+        // POST api/<OdlFaseVersamentoApiController>
+        [HttpPost]
+        [ActionName("AvviaFase")]
+        public async Task<IActionResult> AvviaFase(OdlFaseVersamento odlFaseVersamento, int idFase)
+        {
+            var fase = _context.OdlFasi.SingleOrDefault(p => p.IdFaseOdl == idFase);
+            if (fase == null)
+            {
+                return Ok(new ApiResult<OdlFaseVersamento>()
+                {
+                    Ok = false,
+                    Message = "La fase non è stata trovata!"
+                });
+            }
+            //avvio della fase
+            var odl = _context.Odls.SingleOrDefault(p => p.CodiceOdl == fase.CodiceOdl);
+            if (odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10)
+            {
+                //cambio lo stato della fase
+                fase.Stato = OdlStateEnum.InCorso;
+                //cambio lo stato dell'odl
+                odl.Stato = OdlStateEnum.InCorso;
+                return Ok(new ApiResult<OdlFaseVersamento>()
+                {
+                    Ok = false,
+                    Message = "La fase F10 è in corso!"
+                });
+
+            }
+            //controllo la fase e se si è effettuato almeno un versamento con i numero dei pezzi buoni > 0 //stessa cosa f30 e f40 
+            if (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)
+            {
+                var fase10 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F10);
+                var versamentiF10 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase10.IdFaseOdl);
+                if (versamentiF10.Any() && versamentiF10.Sum(p => p.PezziBuoni) > 0)
+                {
+                    //fase20 può partire
+                    fase.Fase = FaseODLEnum.F20;
+                    fase.Stato = OdlStateEnum.InCorso;
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "La fase F20 è in corso!"
+                    });
+                }
+            }
+            //se non passo per nessuna delle if bad request
+            if (!((odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10) && (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)))
+            {
+                return BadRequest();
+            }
+
+            _context.OdlFaseVersamenti.Add(odlFaseVersamento);
+            await _context.SaveChangesAsync();
+
+            return Ok(new ApiResult<OdlFaseVersamento>()
+            {
+                Ok = true,
+                DataResult = odlFaseVersamento = new OdlFaseVersamento
+                {
+                    Data = odlFaseVersamento.Data,
+                    PezziBuoni = odlFaseVersamento.PezziBuoni,
+                    PezziDifettosi = odlFaseVersamento.PezziDifettosi,
+                    IdFaseOdl = idFase,
+                    TempoEffetivo = odlFaseVersamento.TempoEffetivo,
+                    IdVersamento = 0
+                }
+            });
+        }
 
         //POST api/<OdlFaseVersamento1ApiController>
         [HttpPost]
