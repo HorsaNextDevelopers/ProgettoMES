@@ -94,13 +94,13 @@ namespace AuthSystem.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6d66288f-dd2a-4863-886a-82e6a7f7f37f",
+                            ConcurrencyStamp = "5d62f7f1-4496-47fd-b9e5-ff318e506ed0",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENg7+Gzflo4fXMwj8n7ibw3VzYcsciXYYg/0Daqf4fFThV1y49R//VC1r8tGaIUGhQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBj1SkIGJQ/e6FgvaDKbyxcW13oC9vugjYLpEbMdYkI+WOzbVdpJeJsCs3DhroXAHA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -200,6 +200,9 @@ namespace AuthSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("QuantitaDaProdurre")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stato")
                         .HasColumnType("int");
 
                     b.HasKey("CodiceOdl");
@@ -508,14 +511,14 @@ namespace AuthSystem.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "f6e19afe-7c02-4855-a8cd-48f60396cd84",
+                            ConcurrencyStamp = "2927a62b-638c-449c-a04a-e11d39cf57ff",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1",
-                            ConcurrencyStamp = "44befedd-da86-4947-a78d-50170a70bc1a",
+                            ConcurrencyStamp = "15a15820-0e8b-4244-a748-dcea6f5a8c73",
                             Name = "User",
                             NormalizedName = "User"
                         });

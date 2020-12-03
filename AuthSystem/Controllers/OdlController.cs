@@ -50,6 +50,15 @@ namespace AuthSystem.Controllers
         {
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo");
             ViewData["CodiceCentroDiLavoro"] = new SelectList(_context.CentriDiLavoro, "CodiceCentroDiLavoro", "CodiceCentroDiLavoro");
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
             return View();
         }
 
@@ -58,7 +67,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CodiceOdl,QuantitaDaProdurre,DataInizio,DataFine,CodiceArticolo,CodiceCentroDiLavoro")] Odl odl)
+        public async Task<IActionResult> Create([Bind("CodiceOdl,QuantitaDaProdurre,DataInizio,DataFine,CodiceArticolo,CodiceCentroDiLavoro,Stato")] Odl odl)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +77,15 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", odl.CodiceArticolo);
             ViewData["CodiceCentroDiLavoro"] = new SelectList(_context.CentriDiLavoro, "CodiceCentroDiLavoro", "CodiceCentroDiLavoro", odl.CodiceCentroDiLavoro);
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
             return View(odl);
         }
 
@@ -86,6 +104,15 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", odl.CodiceArticolo);
             ViewData["CodiceCentroDiLavoro"] = new SelectList(_context.CentriDiLavoro, "CodiceCentroDiLavoro", "CodiceCentroDiLavoro", odl.CodiceCentroDiLavoro);
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
             return View(odl);
         }
 
@@ -94,7 +121,7 @@ namespace AuthSystem.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CodiceOdl,QuantitaDaProdurre,DataInizio,DataFine,CodiceArticolo,CodiceCentroDiLavoro")] Odl odl)
+        public async Task<IActionResult> Edit(int id, [Bind("CodiceOdl,QuantitaDaProdurre,DataInizio,DataFine,CodiceArticolo,CodiceCentroDiLavoro,Stato")] Odl odl)
         {
             if (id != odl.CodiceOdl)
             {
@@ -123,6 +150,15 @@ namespace AuthSystem.Controllers
             }
             ViewData["CodiceArticolo"] = new SelectList(_context.Articoli, "CodiceArticolo", "CodiceArticolo", odl.CodiceArticolo);
             ViewData["CodiceCentroDiLavoro"] = new SelectList(_context.CentriDiLavoro, "CodiceCentroDiLavoro", "CodiceCentroDiLavoro", odl.CodiceCentroDiLavoro);
+            var stato = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
+                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+            };
+
+            ViewData["Stato"] = stato;
             return View(odl);
         }
 

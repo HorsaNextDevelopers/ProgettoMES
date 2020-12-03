@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
@@ -33,11 +34,11 @@
                 <span asp-validation-for="TempoEffetivo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Fase</label>
+                <label class="control-label">Fase</label>
                 <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.IdFaseOdl"></select>
             </div>
             <div class="form-group">
-                <label  class="control-label">CodiceOdl</label>
+                <label class="control-label">CodiceOdl</label>
                 <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.CodiceOdl"></select>
             </div>
             <div class="form-group">
@@ -54,3 +55,13 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    function FaseSuccessiva() {
+        $.ajax({
+            url: "/api/OdlFaseVersamentoApi/GetFaseSuccessive/"
+        }).done(function (result) {
+            });
+       alert('ah')
+    }
+</script>
+ 

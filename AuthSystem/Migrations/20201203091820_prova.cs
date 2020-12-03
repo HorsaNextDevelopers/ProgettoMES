@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthSystem.Migrations
 {
-    public partial class Prova : Migration
+    public partial class prova : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -249,7 +249,8 @@ namespace AuthSystem.Migrations
                     DataInizio = table.Column<DateTime>(nullable: false),
                     DataFine = table.Column<DateTime>(nullable: false),
                     CodiceArticolo = table.Column<string>(nullable: true),
-                    CodiceCentroDiLavoro = table.Column<string>(nullable: true)
+                    CodiceCentroDiLavoro = table.Column<string>(nullable: true),
+                    Stato = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -353,14 +354,14 @@ namespace AuthSystem.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "44befedd-da86-4947-a78d-50170a70bc1a", "User", "User" },
-                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "f6e19afe-7c02-4855-a8cd-48f60396cd84", "Admin", "ADMIN" }
+                    { "37c42e1d - 92e5 - 4216 - a308 - 2fa43d187bf1", "15a15820-0e8b-4244-a748-dcea6f5a8c73", "User", "User" },
+                    { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "2927a62b-638c-449c-a04a-e11d39cf57ff", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "6d66288f-dd2a-4863-886a-82e6a7f7f37f", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAENg7+Gzflo4fXMwj8n7ibw3VzYcsciXYYg/0Daqf4fFThV1y49R//VC1r8tGaIUGhQ==", null, false, "", false, "admin@admin.com" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "5d62f7f1-4496-47fd-b9e5-ff318e506ed0", "admin@admin.com", true, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEBj1SkIGJQ/e6FgvaDKbyxcW13oC9vugjYLpEbMdYkI+WOzbVdpJeJsCs3DhroXAHA==", null, false, "", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Postazioni",

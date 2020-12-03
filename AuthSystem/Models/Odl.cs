@@ -28,6 +28,7 @@ namespace AuthSystem.Models
         public string CodiceCentroDiLavoro { get; set; }
         [ForeignKey("CodiceCentroDiLavoro ")]
         public CentroDiLavoro CentriDiLavoro { get; set; }
+        public OdlStateEnum Stato { get; set; }
     }
    
 }
