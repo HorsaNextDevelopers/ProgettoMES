@@ -1,4 +1,4 @@
-﻿using AuthSystem.ApiModel;
+﻿using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -46,158 +45,126 @@ namespace AuthSystem.Controllers.Api
             return this.Ok(versamento);
         }
 
-        [HttpGet]
-        [Route("GetPezziBuoni/{pezziBuoni}")]
-        public async Task<IActionResult> GetPezziBuoni(int pezziBuoni)
-        {
-            var pzB = await _context.OdlFaseVersamenti
-                .FirstOrDefaultAsync(m => m.PezziBuoni == pezziBuoni);
-            return this.Ok(pzB);
-        }
         
-        [HttpGet]
-        [Route("GetFase/{fase}")]
-        public IActionResult GetFase(int fase)
-        {
-            var fs =  _context.OdlFaseVersamenti
-                .Where(m => m.IdFaseOdl == fase);
-            return this.Ok(fs);
-        }
-       
-        //inserimento versamento
-        //sospensione versamento
 
-        /*[HttpPost]
-        [ActionName("InserisciVersamento")]
-        public IActionResult InserisciVersamento([FromBody] OdlFaseVersamento odlFaseVersamento)
-        {
-            //pezziBuoni < della qtà da produrre
-            //pezziBuoni > 0
-            //la fase deve essere attiva idfase = fase.inCorso
-            //contatore per i diversi versamenti di una fase
-            //quando il cotatore = quantità da produrre allora fase.completata
-            //bool fase completata
-            //se la fase attuale > fase10 recupero i versamenti precedenti 
-            return this.Ok(faseAttuale);
-        }*/
+        //POST api/<OdlFaseVersamentoApiController>
+        //[HttpPost]
+        //[ActionName("PostControlloUno")]
+        //public async Task<IActionResult> Post([FromBody] OdlFaseVersamento utente)
+        //{
+        //    ApplicationUser user = new ApplicationUser { UserName = utente.Email, Email = utente.Email, FirstName = utente.FirstName, LastName = utente.LastName };
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
 
-        // POST api/<OdlFaseVersamentoApiController>
+        //    _context.Add(utente);
+        //    await _context.SaveChangesAsync();
+
+        //    return this.Ok(utente);
+        //}
+
+        //POST api/<OdlFaseVersamento1ApiController>
         [HttpPost]
-        [ActionName("AvviaFase")]
-        public async Task<IActionResult> AvviaFase(OdlFaseVersamento odlFaseVersamento ,int idFase)
+        [ActionName("PostControlloDue")]
+        public async Task<IActionResult> PostControlloDue(int codiceOdl, int nomeFase, OdlFaseVersamento versamento)
         {
-            var fase = _context.OdlFasi.SingleOrDefault(p => p.IdFaseOdl == idFase);
-            if(fase == null)
-            {
-                return Ok(new ApiResult<OdlFaseVersamento>()
-                {
-                    Ok = false,
-                    Message = "La fase non è stata trovata!"
-                });
-            }
-            //avvio della fase
-            var odl = _context.Odls.SingleOrDefault(p => p.CodiceOdl == fase.CodiceOdl);
-            if(odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10)
-            {
-                //cambio lo stato della fase
-                fase.Stato = OdlStateEnum.InCorso;
-                //cambio lo stato dell'odl
-                odl.Stato = OdlStateEnum.InCorso;
-                return Ok(new ApiResult<OdlFaseVersamento>()
-                {
-                    Ok = false,
-                    Message = "La fase F10 è in corso!"
-                });
+            //prende un ordine di lavoro in base al codice che gli viene passato
+            var odl = await _context.Odls
+                .SingleOrDefaultAsync(m => m.CodiceOdl == codiceOdl);
 
-            }
-            //controllo la fase e se si è effettuato almeno un versamento con i numero dei pezzi buoni > 0 //stessa cosa f30 e f40 
-            if (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)
-            {
-                var fase10 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F10);
-                var versamentiF10 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase10.IdFaseOdl);
-                if (versamentiF10.Any() && versamentiF10.Sum(p => p.PezziBuoni) > 0)
-                {
-                    //fase20 può partire
-                    fase.Fase = FaseODLEnum.F20;
-                    fase.Stato = OdlStateEnum.InCorso;
-                    return Ok(new ApiResult<OdlFaseVersamento>()
-                    {
-                        Ok = false,
-                        Message = "La fase F20 è in corso!"
-                    });
-                }
-            }
-            //se non passo per nessuna delle if bad request
-            if (!((odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10) && (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)))
-            {
-                return BadRequest();
-            }
+            var fase = await _context.OdlFasi
+                .SingleOrDefaultAsync(m => (int)m.Fase == nomeFase && m.CodiceOdl == codiceOdl);
+
+            var versamentiFasePrecedente = _context.OdlFaseVersamenti.Where(m => m.Fasi.CodiceOdl == codiceOdl && (int)m.Fasi.Fase == (nomeFase - 1)).ToList();
+
+            var versamentiFaseAttuale = _context.OdlFaseVersamenti.Where(m => m.Fasi.CodiceOdl == codiceOdl && (int)m.Fasi.Fase == nomeFase).ToList();
+
+            var pezziBuoniFasePrecedente = versamentiFasePrecedente.Sum(s => s.PezziBuoni);
+
+            var pezziBuoniFaseAttuale = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
+
             
-            _context.OdlFaseVersamenti.Add(odlFaseVersamento);
-            await _context.SaveChangesAsync();
 
-            return Ok(new ApiResult<OdlFaseVersamento>()
+            //controllo se la fase è F10
+            if (nomeFase == 1)
             {
-                Ok = true,
-                DataResult = odlFaseVersamento = new OdlFaseVersamento
+                //controllo se i pezzi inseriti non superano la quantià totale dell'odl
+                if ((pezziBuoniFaseAttuale + versamento.PezziBuoni) > odl.QuantitaDaProdurre)
                 {
-                    Data = odlFaseVersamento.Data,
-                    PezziBuoni = odlFaseVersamento.PezziBuoni,
-                    PezziDifettosi = odlFaseVersamento.PezziDifettosi,
-                    IdFaseOdl = idFase,
-                    TempoEffetivo = odlFaseVersamento.TempoEffetivo,
-                    IdVersamento = 0
+                    return BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
+
                 }
-            });
+                else
+                {
+                    _context.OdlFaseVersamenti.Add(versamento);
+                    await _context.SaveChangesAsync();
+                    return Ok(versamento);
+                }
+
+            }
+            else   //se la fase è diversa dalla fase 10
+            {
+                //controllo se esistono versamenti nella fase precedente alla fase attuale
+                if(pezziBuoniFasePrecedente == 0)
+                {
+                    return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
+                }
+                //controllo se i pezzi inseriti in questo versamento superano i pezzi versati nella fase precedente
+                if (versamento.PezziBuoni > pezziBuoniFasePrecedente - pezziBuoniFaseAttuale)
+                {
+                    return BadRequest("Cattiva Camilla, stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente");
+                }
+                else
+                {
+                    _context.OdlFaseVersamenti.Add(versamento);
+                    await _context.SaveChangesAsync();
+                    //controllo se il versamento attuale va a completare l'odl
+                    var fasiOdl = _context.OdlFasi.Where(m => m.CodiceOdl == codiceOdl ).ToList();
+                    var conteggioFasi = fasiOdl.Count();
+                    var pezziBuoniFaseAttuale2 = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
+                    pezziBuoniFaseAttuale2 = pezziBuoniFaseAttuale2 + versamento.PezziBuoni;
+                    if (nomeFase == conteggioFasi && odl.QuantitaDaProdurre == pezziBuoniFaseAttuale2)
+                    {
+                        return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
+                    }
+                    return Ok(versamento);
+
+                }
+
+            }
         }
 
-            /* [HttpPost]
-             [ActionName("PostControlloDue") ]
-             public async Task<IActionResult> PosPostControlloDuet([FromBody] OdlFaseVersamento utente)
-             {
-                 ApplicationUser user = new ApplicationUser { UserName = utente.Email, Email = utente.Email, FirstName = utente.FirstName, LastName = utente.LastName };
+            //[HttpPost]
+            //[ActionName("PostControlloTre")]
+            //public async Task<IActionResult> PostControlloTre([FromBody] OdlFaseVersamento utente)
+            //{
+            //    ApplicationUser user = new ApplicationUser { UserName = utente.Email, Email = utente.Email, FirstName = utente.FirstName, LastName = utente.LastName };
 
-                 if (!ModelState.IsValid)
-                 {
-                     return BadRequest(ModelState);
-                 }
-
-
-                 _context.Add(utente);
-                 await _context.SaveChangesAsync();
-
-                 return this.Ok(utente);
-             }
-
-             [HttpPost]
-             [ActionName("PostControlloTre")]
-             public async Task<IActionResult> PostControlloTre([FromBody] OdlFaseVersamento utente)
-             {
-                 ApplicationUser user = new ApplicationUser { UserName = utente.Email, Email = utente.Email, FirstName = utente.FirstName, LastName = utente.LastName };
-
-                 if (!ModelState.IsValid)
-                 {
-                     return BadRequest(ModelState);
-                 }
+            //    if (!ModelState.IsValid)
+            //    {
+            //        return BadRequest(ModelState);
+            //    }
 
 
-                 _context.Add(utente);
-                 await _context.SaveChangesAsync();
+            //    _context.Add(utente);
+            //    await _context.SaveChangesAsync();
 
-                 return this.Ok(utente);
-             }
+            //    return this.Ok(utente);
+            //}
 
-             // PUT api/<OdlFaseVersamentoApiController>/5
-             [HttpPut("{id}")]
-             public void Put(int id, [FromBody] string value)
-             {
-             }
-
-             // DELETE api/<OdlFaseVersamentoApiController>/5
-             [HttpDelete("{id}")]
-             public void Delete(int id)
-             {
-             }*/
+            // PUT api/<OdlFaseVersamentoApiController>/5
+            [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
         }
+
+        // DELETE api/<OdlFaseVersamentoApiController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
 }
