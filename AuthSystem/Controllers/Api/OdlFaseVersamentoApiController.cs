@@ -86,7 +86,7 @@ namespace AuthSystem.Controllers.Api
 
             var pezziBuoniFaseAttuale = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
 
-
+            
 
             //controllo se la fase è F10
             if (nomeFase == 1)
@@ -107,6 +107,11 @@ namespace AuthSystem.Controllers.Api
             }
             else   //se la fase è diversa dalla fase 10
             {
+                //controllo se esistono versamenti nella fase precedente alla fase attuale
+                if(pezziBuoniFasePrecedente == 0)
+                {
+                    return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
+                }
                 //controllo se i pezzi inseriti in questo versamento superano i pezzi versati nella fase precedente
                 if (versamento.PezziBuoni > pezziBuoniFasePrecedente - pezziBuoniFaseAttuale)
                 {
@@ -116,6 +121,7 @@ namespace AuthSystem.Controllers.Api
                 {
                     _context.OdlFaseVersamenti.Add(versamento);
                     await _context.SaveChangesAsync();
+
                     return Ok(versamento);
 
                 }
