@@ -10,8 +10,7 @@ namespace AuthSystem.Models
         {
             Nuovo = 1,
             InCorso = 2,
-            Sospeso = 3,
-            Completato = 4
+            Completato = 3
 
         }
     

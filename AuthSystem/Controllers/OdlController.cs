@@ -54,8 +54,8 @@ namespace AuthSystem.Controllers
             {
                 new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
                 new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()}
+               
             };
 
             ViewData["Stato"] = stato;
@@ -81,8 +81,8 @@ namespace AuthSystem.Controllers
             {
                 new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
                 new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()}
+               
             };
 
             ViewData["Stato"] = stato;
@@ -108,8 +108,8 @@ namespace AuthSystem.Controllers
             {
                 new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
                 new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()}
+              
             };
 
             ViewData["Stato"] = stato;
@@ -154,8 +154,8 @@ namespace AuthSystem.Controllers
             {
                 new SelectListItem() {Text= OdlStateEnum.Nuovo.ToString(), Value= ((int)OdlStateEnum.Nuovo).ToString()},
                 new SelectListItem() {Text= OdlStateEnum.Completato.ToString(), Value= ((int)OdlStateEnum.Completato).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()},
-                new SelectListItem() {Text= OdlStateEnum.Sospeso.ToString(), Value= ((int)OdlStateEnum.Sospeso).ToString()}
+                new SelectListItem() {Text= OdlStateEnum.InCorso.ToString(), Value= ((int)OdlStateEnum.InCorso).ToString()}
+               
             };
 
             ViewData["Stato"] = stato;

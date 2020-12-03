@@ -83,7 +83,7 @@ namespace AuthSystem.Controllers.Api
 
 
         // POST api/<OdlFaseVersamentoApiController>
-        [HttpPut]
+        [HttpPost]
         [ActionName("AvviaFase")]
         public async Task<IActionResult> AvviaFase(OdlFaseVersamento odlFaseVersamento ,int idFase)
         {
