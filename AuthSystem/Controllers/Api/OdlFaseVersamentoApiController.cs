@@ -121,7 +121,15 @@ namespace AuthSystem.Controllers.Api
                 {
                     _context.OdlFaseVersamenti.Add(versamento);
                     await _context.SaveChangesAsync();
-
+                    //controllo se il versamento attuale va a completare l'odl
+                    var fasiOdl = _context.OdlFasi.Where(m => m.CodiceOdl == codiceOdl ).ToList();
+                    var conteggioFasi = fasiOdl.Count();
+                    var pezziBuoniFaseAttuale2 = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
+                    pezziBuoniFaseAttuale2 = pezziBuoniFaseAttuale2 + versamento.PezziBuoni;
+                    if (nomeFase == conteggioFasi && odl.QuantitaDaProdurre == pezziBuoniFaseAttuale2)
+                    {
+                        return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
+                    }
                     return Ok(versamento);
 
                 }
