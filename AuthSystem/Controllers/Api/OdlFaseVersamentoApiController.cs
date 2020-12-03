@@ -112,60 +112,24 @@ namespace AuthSystem.Controllers.Api
 
             }
             //controllo la fase e se si è effettuato almeno un versamento con i numero dei pezzi buoni > 0 //stessa cosa f30 e f40 
-            //controllo la fase e se si è effettuato almeno un versamento con i numero dei pezzi buoni > 0
-            if (fase.Fase == FaseODLEnum.F20 && odl.Stato == OdlStateEnum.InCorso)
+            if (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)
             {
-                var fase20 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F20);
-                var versamentiF20 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase20.IdFaseOdl);
-                if (versamentiF20.Any() && versamentiF20.Sum(p => p.PezziBuoni) > 0)
+                var fase10 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F10);
+                var versamentiF10 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase10.IdFaseOdl);
+                if (versamentiF10.Any() && versamentiF10.Sum(p => p.PezziBuoni) > 0)
                 {
-                    //fase30 può partire
-                    fase.Fase = FaseODLEnum.F30;
+                    //fase20 può partire
+                    fase.Fase = FaseODLEnum.F20;
                     fase.Stato = OdlStateEnum.InCorso;
                     return Ok(new ApiResult<OdlFaseVersamento>()
                     {
                         Ok = false,
-                        Message = "La fase F230 è in corso!"
-                    });
-                }
-            }
-            //controllo la fase e se si è effettuato almeno un versamento con i numero dei pezzi buoni > 0
-            if (fase.Fase == FaseODLEnum.F30 && odl.Stato == OdlStateEnum.InCorso)
-            {
-                var fase30 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F30);
-                var versamentiF30 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase30.IdFaseOdl);
-                if (versamentiF30.Any() && versamentiF30.Sum(p => p.PezziBuoni) > 0)
-                {
-                    //fase40 può partire
-                    fase.Fase = FaseODLEnum.F40;
-                    fase.Stato = OdlStateEnum.InCorso;
-                    return Ok(new ApiResult<OdlFaseVersamento>()
-                    {
-                        Ok = false,
-                        Message = "La fase F40 è in corso!"
-                    });
-                }
-            }
-            //ordine completato se f40 è concluso e f40 è conclusa quando i suoi pezzi buoni sono uguali alla quantità da produrre dell'odl
-            if(fase.Fase == FaseODLEnum.F40 && odl.Stato == OdlStateEnum.InCorso)
-            {
-                var fase40 = _context.OdlFasi.SingleOrDefault(p => p.CodiceOdl == odl.CodiceOdl && p.Fase == FaseODLEnum.F40);
-                var versamentiF40 = _context.OdlFaseVersamenti.Where(p => p.IdFaseOdl == fase40.IdFaseOdl);
-                if (versamentiF40.Any() && versamentiF40.Sum(p => p.PezziBuoni) == odl.QuantitaDaProdurre)
-                {
-                    //fase40 completata
-                    fase.Stato = OdlStateEnum.Completato;
-                    odl.Stato = OdlStateEnum.Completato;
-                    return Ok(new ApiResult<OdlFaseVersamento>()
-                    {
-                        Ok = false,
-                        Message = "L'ordine di lavoro è completato!"
+                        Message = "La fase F20 è in corso!"
                     });
                 }
             }
             //se non passo per nessuna delle if bad request
-            if ((fase == null) && (odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10) && (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso
-                ) && (fase.Fase == FaseODLEnum.F20 && odl.Stato == OdlStateEnum.InCorso) && (fase.Fase == FaseODLEnum.F30 && odl.Stato == OdlStateEnum.InCorso) && (fase.Fase == FaseODLEnum.F40 && odl.Stato == OdlStateEnum.InCorso))
+            if (!((odl.Stato == OdlStateEnum.Nuovo && fase.Stato == OdlStateEnum.Nuovo && fase.Fase == FaseODLEnum.F10) && (fase.Fase == FaseODLEnum.F10 && odl.Stato == OdlStateEnum.InCorso)))
             {
                 return BadRequest();
             }
