@@ -78,8 +78,8 @@ namespace AuthSystem.Controllers.Api
                 if ((pezziBuoniFaseAttuale + versamento.PezziBuoni) > odl.QuantitaDaProdurre)
                 {
                     return BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
-
                 }
+                   
                 else
                 {
                     _context.OdlFaseVersamenti.Add(versamento);

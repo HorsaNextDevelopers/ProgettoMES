@@ -3,12 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Ordine di lavoro</h1>
 <table class="table">
     <thead>
         <tr>
@@ -30,7 +25,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Stato)
             </th>
-            <th></th>
+            <th><a asp-action="Create" class="btn btn-outline-success "><i class="far fa-plus-square"></i>Ordine di lavoro</a></th>
         </tr>
     </thead>
     <tbody>
@@ -55,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.Stato)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CodiceOdl">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CodiceOdl">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CodiceOdl">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.CodiceOdl "><i class="fa fa-marker fa-lg"></i></a> |
+
+                <a asp-action="Delete" asp-route-id="@item.CodiceOdl " class="text-danger ml-1"><i class="fa fa-trash-alt fa-lg"></i></a>
             </td>
         </tr>
 }

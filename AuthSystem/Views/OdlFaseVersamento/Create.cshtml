@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crea</h1>
 
-<h4>OdlFaseVersamento</h4>
+<h4>Versamento</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,33 +35,24 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Fase</label>
-                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.IdFaseOdl"></select>
+                <select asp-for="IdFaseOdl" class="form-control"  id = "SelectFase" asp-items="ViewBag.IdFaseOdl"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">CodiceOdl</label>
-                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.CodiceOdl"></select>
+                <select asp-for="IdFaseOdl" class="form-control" id = "SelectOdl" asp-items="ViewBag.CodiceOdl"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crea" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Torna alla lista</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script>
-    function FaseSuccessiva() {
-        $.ajax({
-            url: "/api/OdlFaseVersamentoApi/GetFaseSuccessive/"
-        }).done(function (result) {
-            });
-       alert('ah')
-    }
-</script>
  
