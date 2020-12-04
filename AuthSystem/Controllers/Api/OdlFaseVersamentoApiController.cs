@@ -1,4 +1,5 @@
-﻿using AuthSystem.Areas.Identity.Data;
+﻿using AuthSystem.ApiModel;
+using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -94,7 +95,12 @@ namespace AuthSystem.Controllers.Api
                 //controllo se i pezzi inseriti non superano la quantià totale dell'odl
                 if ((pezziBuoniFaseAttuale + versamento.PezziBuoni) > odl.QuantitaDaProdurre)
                 {
-                    return BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "stai inserendo una quantità superiore a quella dell'odl"
+                    });
+                    //BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
 
                 }
                 else
@@ -110,12 +116,22 @@ namespace AuthSystem.Controllers.Api
                 //controllo se esistono versamenti nella fase precedente alla fase attuale
                 if(pezziBuoniFasePrecedente == 0)
                 {
-                    return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti"
+                    });
+                    //return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
                 }
                 //controllo se i pezzi inseriti in questo versamento superano i pezzi versati nella fase precedente
                 if (versamento.PezziBuoni > pezziBuoniFasePrecedente - pezziBuoniFaseAttuale)
                 {
-                    return BadRequest("Cattiva Camilla, stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente"
+                    });
+                    //return BadRequest("Cattiva Camilla, stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente");
                 }
                 else
                 {
@@ -128,9 +144,19 @@ namespace AuthSystem.Controllers.Api
                     pezziBuoniFaseAttuale2 = pezziBuoniFaseAttuale2 + versamento.PezziBuoni;
                     if (nomeFase == conteggioFasi && odl.QuantitaDaProdurre == pezziBuoniFaseAttuale2)
                     {
-                        return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
+                        return Ok(new ApiResult<OdlFaseVersamento>()
+                        {
+                            Ok = true,
+                            Message = "Hai completato l'odl: " + odl.CodiceOdl
+                        });
+                        //return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
                     }
-                    return Ok(versamento);
+
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = true,
+                        DataResult = versamento
+                    });
 
                 }
 

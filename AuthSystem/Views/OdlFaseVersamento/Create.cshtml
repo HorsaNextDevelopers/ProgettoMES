@@ -33,15 +33,15 @@
                 <span asp-validation-for="TempoEffetivo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Fase</label>
-                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.IdFaseOdl"></select>
+                <label class="control-label">Fase</label>
+                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.IdFaseOdl" id="selectFase"></select>
             </div>
             <div class="form-group">
-                <label  class="control-label">CodiceOdl</label>
-                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.CodiceOdl"></select>
+                <label class="control-label">CodiceOdl</label>
+                <select asp-for="IdFaseOdl" class="form-control" asp-items="ViewBag.CodiceOdl" id="selectOdl"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" onclick="controlloVersamenti()" />
             </div>
         </form>
     </div>
@@ -54,3 +54,26 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+@*<script>
+
+    function controlloVersamenti() {
+        var codiceOdl = $("#SelectCodiceOdl").val();
+        var nomeFase = $("#SelectNomeFase").val();
+        //versamento
+        $.ajax({
+            url: "/api/OdlFaseVersamentoApiController/PostControlloDue/" + codiceOdl + "/" + nomeFase + "/" + versamento
+        }).done(function (result) {    //result deve contenere il messaggio di errore come ApiResult
+            if (result.ok) {
+                InserisciVersamento();
+            } else {
+                // pop-up con risultato
+                xdialog.alert(result.message);
+            }
+
+        });
+    }
+
+
+</script>*@
