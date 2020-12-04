@@ -45,20 +45,27 @@ namespace AuthSystem.Controllers.Api
 
             return this.Ok(versamento);
         }
-       
+
 
 
         //POST api/<OdlFaseVersamento1ApiController>
         [HttpPost]
         [ActionName("PostControlloDue")]
-        public async Task<IActionResult> PostControlloDue(int codiceOdl, int nomeFase,  OdlFaseVersamento versamento)
+        public async Task<IActionResult> PostControlloDue([FromBody] OdlFaseVersamento versamento)
         {
+            int idFase = versamento.IdFaseOdl;
+
+            var fase = await _context.OdlFasi
+                .SingleOrDefaultAsync(m => (int)m.Fase == idFase);
+
+            int codiceOdl = fase.CodiceOdl;
+            int nomeFase = (int)fase.Fase;
+
+
             //prende un ordine di lavoro in base al codice che gli viene passato
             var odl = await _context.Odls
                 .SingleOrDefaultAsync(m => m.CodiceOdl == codiceOdl);
 
-            var fase = await _context.OdlFasi
-                .SingleOrDefaultAsync(m => (int)m.Fase == nomeFase && m.CodiceOdl == codiceOdl );
 
             var versamentiFasePrecedente = _context.OdlFaseVersamenti.Where(m => m.Fasi.CodiceOdl == codiceOdl && (int)m.Fasi.Fase == (nomeFase - 1)).ToList();
 
@@ -68,24 +75,29 @@ namespace AuthSystem.Controllers.Api
 
             var pezziBuoniFaseAttuale = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
 
-            
+
 
             //controllo se la fase è F10
             if (nomeFase == 1)
             {
-               
                 //controllo se i pezzi inseriti non superano la quantià totale dell'odl
                 if ((pezziBuoniFaseAttuale + versamento.PezziBuoni) > odl.QuantitaDaProdurre)
                 {
-                    return BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "stai inserendo una quantità superiore a quella dell'odl"
+                    });
+                    //BadRequest("Cattiva Camilla, stai inserendo una quantità superiore a quella dell'odl");
+
                 }
-                   
                 else
                 {
                     _context.OdlFaseVersamenti.Add(versamento);
                     await _context.SaveChangesAsync();
                     var pezziBuoniFaseAttuale2 = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
                     pezziBuoniFaseAttuale2 = pezziBuoniFaseAttuale2 + versamento.PezziBuoni;
+
                     if (versamentiFaseAttuale.Count() == 1)
                     {
                         //cambio lo stato della fase
@@ -98,40 +110,53 @@ namespace AuthSystem.Controllers.Api
                         //cambio lo stato della fase in completato
                         fase.Stato = OdlStateEnum.Completato;
                     }
+
+
                     return Ok(versamento);
                 }
 
             }
             else   //se la fase è diversa dalla fase 10
             {
-
                 //controllo se esistono versamenti nella fase precedente alla fase attuale
-                if(pezziBuoniFasePrecedente == 0)
+                if (pezziBuoniFasePrecedente == 0)
                 {
-
-                    return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti"
+                    });
+                    //return BadRequest("Cattiva Camilla, non puoi fare versamenti in questa fase poichè non esistono versamenti precedenti");
                 }
                 //controllo se i pezzi inseriti in questo versamento superano i pezzi versati nella fase precedente
                 if (versamento.PezziBuoni > pezziBuoniFasePrecedente - pezziBuoniFaseAttuale)
                 {
-                    return BadRequest("Cattiva Camilla, stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente");
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = false,
+                        Message = "stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente"
+                    });
+                    //return BadRequest("Cattiva Camilla, stai versando una quantità di pezzi superiore al numero di pezzi disponibili dalla fase precedente");
                 }
                 else
                 {
                     _context.OdlFaseVersamenti.Add(versamento);
                     await _context.SaveChangesAsync();
-                    //cambio stato della fase attuale
-                    if (versamentiFaseAttuale.Count() == 1)
-                    {
-                        //cambio lo stato della fase
-                        fase.Stato = OdlStateEnum.InCorso;
-    
-                    }
                     //controllo se il versamento attuale va a completare l'odl
-                    var fasiOdl = _context.OdlFasi.Where(m => m.CodiceOdl == codiceOdl ).ToList();
+                    var fasiOdl = _context.OdlFasi.Where(m => m.CodiceOdl == codiceOdl).ToList();
                     var conteggioFasi = fasiOdl.Count();
                     var pezziBuoniFaseAttuale2 = versamentiFaseAttuale.Sum(s => s.PezziBuoni);
                     pezziBuoniFaseAttuale2 = pezziBuoniFaseAttuale2 + versamento.PezziBuoni;
+                    if (nomeFase == conteggioFasi && odl.QuantitaDaProdurre == pezziBuoniFaseAttuale2)
+                    {
+                        return Ok(new ApiResult<OdlFaseVersamento>()
+                        {
+                            Ok = true,
+                            Message = "Hai completato l'odl: " + odl.CodiceOdl
+                        });
+                        //return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
+                    }
+
                     if (odl.QuantitaDaProdurre == pezziBuoniFaseAttuale2)
                     {
                         //cambio lo stato della fase
@@ -144,12 +169,17 @@ namespace AuthSystem.Controllers.Api
 
                         return this.Ok("Hai completato l'odl: " + odl.CodiceOdl);
                     }
-                    return Ok(versamento);
+
+                    return Ok(new ApiResult<OdlFaseVersamento>()
+                    {
+                        Ok = true,
+                        DataResult = versamento
+                    });
 
                 }
 
             }
-        }   
+        }
 
     }
 }

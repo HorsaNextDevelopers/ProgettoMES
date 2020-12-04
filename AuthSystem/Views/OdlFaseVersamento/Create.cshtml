@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
@@ -35,11 +35,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Fase</label>
-                <select asp-for="IdFaseOdl" class="form-control"  id = "SelectFase" asp-items="ViewBag.IdFaseOdl"></select>
+                <select asp-for="IdFaseOdl" class="form-control" id="SelectFase" asp-items="ViewBag.IdFaseOdl"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">CodiceOdl</label>
-                <select asp-for="IdFaseOdl" class="form-control" id = "SelectOdl" asp-items="ViewBag.CodiceOdl"></select>
+                <select asp-for="IdFaseOdl" class="form-control" id="SelectOdl" asp-items="ViewBag.CodiceOdl"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Crea" class="btn btn-primary" />
@@ -55,4 +55,38 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
- 
+
+
+
+
+<script>
+    function controlloVersamenti() {
+        debugger;
+        var codiceOdl = $("#SelectCodiceOdl").val();
+        var nomeFase = $("#SelectNomeFase").val();
+        //versamento
+
+        var dataApi = {
+            data: '2020-12-02',
+            pezziBuoni: 5,
+            pezziDifettosi: 0,
+            tempoEffetivo: 15,
+            idFaseOdl: 2,
+            stato: 1
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: "/api/OdlFaseVersamentoApi",
+            data: $("form").last().serialize()
+
+        }).done(function (result) {    //result deve contenere il messaggio di errore come ApiResult
+            if (result.ok) {
+                InserisciVersamento();
+            } else {
+                // pop-up con risultato
+                xdialog.alert(result.message);
+            }
+        });
+    }
+    </script>
